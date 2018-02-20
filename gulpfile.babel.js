@@ -7,26 +7,23 @@ gulp.task('inject', function () {
   let target = gulp.src('./public/build/index.html');
   let filesToInject = [
     './public/build/js/**/*.js',
-    './public/build/css/**/*.css',
+		'./public/build/css/**/*.css',
+		
   ]
   let sources = gulp.src(filesToInject, { read: false });
  
-  return target.pipe(inject(sources))
+	return target
+				.pipe(inject(sources))
+				.pipe(gulp.dest('./public/build'));
 });
 
 gulp.task('build', function(){
   let filesToMove = [
       './public/src/**/*.*',
-  ];
+	];
+	
   gulp.src(filesToMove) 
   .pipe(gulp.dest('./public/build/'));
-})
-
-gulp.task('watch', function(){
-  gulp.watch([
-    './public/src/app/**/*.js',
-    './public/src/css/**/*.css',
-  ], ['inject'])
 })
 
 gulp.task('default', [
