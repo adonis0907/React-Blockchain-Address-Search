@@ -4,18 +4,42 @@ import gulp from 'gulp';
 import inject from 'gulp-inject';
 import babel from 'gulp-babel';
 import sourcemaps from 'gulp-sourcemaps';
+import source from 'vinyl-source-stream';
 import concat from 'gulp-concat';
-import browserify from 'gulp-browserify'
+import browserify from 'browserify';
+import del from 'del';
+import runSequence from 'run-sequence';
+import debug from 'gulp-debug';
+import babelify from 'babelify';
+import rename from 'gulp-rename';
+import browserifyCss from 'browserify-css';
+import connect from 'gulp-connect';
+// import cors from 'cors';
+var cors = function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'headers_you_want_to_accept');
+  next();
+};
+
+
+gulp.task('connect', function() {
+  connect.server({
+    root: './public/build/',
+    middleware: function() {
+        return [cors];
+    }
+  });
+});
 
 gulp.task('inject', () => {
 	let paths = [
 		'./public/build/app/app.js',
 		'./public/build/css/**/*.css',
 	]
-	
-	gulp.src('./public/build/index.html')
-		.pipe(inject(gulp.src(paths, { read: false }),
-			// Options
+
+	return gulp.src('./public/build/index.html')
+		.pipe(debug())
+		.pipe(inject(gulp.src(paths, { read: true }),
 			{
 				ignorePath: 'public/build',
 				addRootSlash: false
@@ -24,32 +48,61 @@ gulp.task('inject', () => {
 		.pipe(gulp.dest('./public/build'));
 });
 
-gulp.task('babel-transpile', () => {
-	gulp.task('default', () =>
-		gulp.src('./public/src/app/**/*.js')
-			.pipe(sourcemaps.init())
-			.pipe(babel({
-				presets: ['env', 'react']
-			}))
-			.pipe(browserify({
-				transform: ['babelify'],
-			}))
-			.pipe(gulp.dest('./public/build/app'))
-	);
+gulp.task('babel', () => {
+	return gulp.src('./public/src/app/app.js')
+		.pipe(babel({
+			presets: ['es2015', 'react']
+		}))
+		.pipe(sourcemaps.init())
+		.pipe(gulp.dest('./public/build/app'))
+
+});
+
+gulp.task('client', () => {
+	return browserify('public/build/app/app.js')
+		.transform(babelify, { presets: ["es2015", "react"] })
+		.transform(browserifyCss, {
+				poll : true
+		})
+		.bundle()
+		.pipe(source('./public/src/app/app.js'))
+		.pipe(rename({ dirname: './' }))
+		.pipe(gulp.dest('public/build/app'))
+
 });
 
 gulp.task('build', () => {
 	let filesToMove = [
 		'./public/src/**/*.*',
 	];
-
-	gulp.src(filesToMove)
+	return gulp.src(filesToMove)
 		.pipe(gulp.dest('./public/build/'));
 })
 
+gulp.task('del-build', () => {
+	return del([
+		'./public/build',
+	]);
+})
 
-gulp.task('default', [
-	'babel-transpile',
-	'build',
-	'inject',
-])
+gulp.task('watch', () =>{
+	gulp.watch('./public/src/**/**', [
+		'del-build',
+		'build',
+		'babel',
+		'client',
+		'inject'
+	]); 
+})
+
+gulp.task('default', (cb) => {
+	runSequence(
+		'del-build',
+		'build',
+		'babel',
+		'client',
+		'inject',
+		'connect',
+		'watch'
+	)
+})
