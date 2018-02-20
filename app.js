@@ -2,7 +2,6 @@
 
 import express from 'express';
 import path from 'path';
-import jade from 'jade';
 import ejs from 'ejs'
 
 
