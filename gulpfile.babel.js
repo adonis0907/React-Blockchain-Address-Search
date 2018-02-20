@@ -2,19 +2,22 @@
 
 import gulp from 'gulp';
 import inject from 'gulp-inject';
- 
+
+let paths = [
+	'./public/build/app/main.js',
+	'./public/build/css/**/*.css',
+]
+
 gulp.task('inject', function () {
-  let target = gulp.src('./public/build/index.html');
-  let filesToInject = [
-    './public/build/js/**/*.js',
-		'./public/build/css/**/*.css',
-		
-  ]
-  let sources = gulp.src(filesToInject, { read: false });
- 
-	return target
-				.pipe(inject(sources))
-				.pipe(gulp.dest('./public/build'));
+	gulp.src('./public/build/index.html')
+			.pipe(inject(gulp.src(paths, {read: false}),
+					// Options
+					{
+							ignorePath: 'public/build',
+							addRootSlash: false
+					}
+			))
+			.pipe(gulp.dest('./public/build'));
 });
 
 gulp.task('build', function(){
