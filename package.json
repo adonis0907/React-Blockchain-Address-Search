@@ -39,14 +39,17 @@
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
     "babelify": "^8.0.0",
+    "del": "^3.0.0",
     "ejs": "^2.5.7",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.1",
     "gulp-browserify": "^0.5.1",
     "gulp-concat": "^2.6.1",
+    "gulp-debug": "^3.2.0",
     "gulp-inject": "^4.3.0",
     "gulp-react": "^3.1.0",
     "gulp-sourcemaps": "^2.6.4",
-    "nodemon": "^1.15.1"
+    "nodemon": "^1.15.1",
+    "run-sequence": "^2.2.1"
   }
 }

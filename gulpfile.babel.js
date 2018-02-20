@@ -6,16 +6,19 @@ import babel from 'gulp-babel';
 import sourcemaps from 'gulp-sourcemaps';
 import concat from 'gulp-concat';
 import browserify from 'gulp-browserify'
+import del from 'del';
+import runSequence from 'run-sequence';
+import debug from 'gulp-debug';
 
-gulp.task('inject', () => {
+gulp.task('inject', ['build'], () => {
 	let paths = [
 		'./public/build/app/app.js',
 		'./public/build/css/**/*.css',
 	]
 	
-	gulp.src('./public/build/index.html')
-		.pipe(inject(gulp.src(paths, { read: false }),
-			// Options
+	return gulp.src('./public/build/index.html')
+		.pipe(debug())
+		.pipe(inject(gulp.src(paths, { read: true }),
 			{
 				ignorePath: 'public/build',
 				addRootSlash: false
@@ -25,7 +28,7 @@ gulp.task('inject', () => {
 });
 
 gulp.task('babel-transpile', () => {
-	gulp.task('default', () =>
+	return gulp.task('default', () =>
 		gulp.src('./public/src/app/**/*.js')
 			.pipe(sourcemaps.init())
 			.pipe(babel({
@@ -43,13 +46,22 @@ gulp.task('build', () => {
 		'./public/src/**/*.*',
 	];
 
-	gulp.src(filesToMove)
+	return gulp.src(filesToMove)
 		.pipe(gulp.dest('./public/build/'));
 })
 
+gulp.task('del-build', () => {
+	return del([
+    './public/build',
+  ]);
+})
 
-gulp.task('default', [
-	'babel-transpile',
-	'build',
-	'inject',
-])
+gulp.task('default', (cb) => {
+	runSequence(
+		'del-build',
+		'babel-transpile',
+		'build',
+		'inject',
+		cb
+	)
+})
