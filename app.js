@@ -1,10 +1,12 @@
+'use strict';
+
 import express from 'express';
 import path from 'path';
 
 let app = express();
 
-app.set('views', path.join(__dirname, 'public/src/'));
-app.use(express.static(__dirname + '/views'));
+// app.set('views', path.join(__dirname, 'public/src/'));
+// app.use(express.static(__dirname + '/views'));
 app.use(express.static(__dirname + '/public/src'));
 
 app.get("/", function (req, res) {
