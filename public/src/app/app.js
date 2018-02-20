@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AddressSearch from './components/address/search/addressSearch';
+import AddressSearch from './components/addressSearch/addressSearch';
 
 ReactDOM.render(
 	<div>
