@@ -13,14 +13,22 @@ import debug from 'gulp-debug';
 import babelify from 'babelify';
 import rename from 'gulp-rename';
 import browserifyCss from 'browserify-css';
-import webserver from 'gulp-webserver';
+import connect from 'gulp-connect';
+// import cors from 'cors';
+var cors = function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'headers_you_want_to_accept');
+  next();
+};
 
-gulp.task('webserver', function() {
- gulp.src('./public/build/')
-	 .pipe(webserver({
-		 livereload: true,
-		 open: true
-	 }));
+
+gulp.task('connect', function() {
+  connect.server({
+    root: './public/build/',
+    middleware: function() {
+        return [cors];
+    }
+  });
 });
 
 gulp.task('inject', () => {
@@ -94,7 +102,7 @@ gulp.task('default', (cb) => {
 		'babel',
 		'client',
 		'inject',
-		'webserver',
+		'connect',
 		'watch'
 	)
 })

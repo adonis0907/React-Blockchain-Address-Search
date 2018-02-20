@@ -1,5 +1,5 @@
 import React from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 import AddressForm from './form/addressForm';
 import AddressTransactionList from './transactionList/addressTransactionList';
 
@@ -21,16 +21,21 @@ export default class AddressSearch extends React.Component {
     this.setState({
       query: target.value
     });
-    console.log('update query parent')
   }
 
   getAddressInformation() {
     // TODO: connect with API and update state with information
-    console.log('getAddress info');
+    const baseUrl = 'https://blockchain.info/';
+    let addressQuery = '/rawaddr/' + this.state.query;
+    let response;
+    axios.get(baseUrl + addressQuery)
+      .then(res => {
+        this.setState({
+          rows: res.txs
+        });
+      });
+      
 
-    this.setState({
-      rows: ['data.transaction', 'data.transaction']
-    });
   }
 
   render() {
