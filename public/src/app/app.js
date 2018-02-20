@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AddressSearch from './components/address/addressSearch';
+import AddressSearch from './components/address/search/addressSearch';
 
 ReactDOM.render(
-	<div>My App</div>,
+	<div>
+		<div>My App</div>
+		<AddressSearch></AddressSearch>
+	</div>,
 	document.getElementById('root')
 );

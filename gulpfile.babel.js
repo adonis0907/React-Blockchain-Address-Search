@@ -12,6 +12,7 @@ import runSequence from 'run-sequence';
 import debug from 'gulp-debug';
 import babelify from 'babelify';
 import rename from 'gulp-rename';
+import browserifyCss from 'browserify-css';
 
 gulp.task('inject', () => {
 	let paths = [
@@ -43,6 +44,9 @@ gulp.task('babel', () => {
 gulp.task('client', () => {
 	return browserify('public/build/app/app.js')
 		.transform(babelify, { presets: ["es2015", "react"] })
+		.transform(browserifyCss, {
+				poll : true
+		})
 		.bundle()
 		.pipe(source('./public/src/app/app.js'))
 		.pipe(rename({ dirname: './' }))
