@@ -13,6 +13,15 @@ import debug from 'gulp-debug';
 import babelify from 'babelify';
 import rename from 'gulp-rename';
 import browserifyCss from 'browserify-css';
+import webserver from 'gulp-webserver';
+
+gulp.task('webserver', function() {
+ gulp.src('./public/build/')
+	 .pipe(webserver({
+		 livereload: true,
+		 open: true
+	 }));
+});
 
 gulp.task('inject', () => {
 	let paths = [
@@ -68,12 +77,24 @@ gulp.task('del-build', () => {
 	]);
 })
 
+gulp.task('watch', () =>{
+	gulp.watch('./public/src/**/**', [
+		'del-build',
+		'build',
+		'babel',
+		'client',
+		'inject'
+	]); 
+})
+
 gulp.task('default', (cb) => {
 	runSequence(
 		'del-build',
 		'build',
 		'babel',
 		'client',
-		'inject'
+		'inject',
+		'webserver',
+		'watch'
 	)
 })
