@@ -19,7 +19,7 @@
   font-size: 20px;
   padding: 10px 20px 10px 20px;
 	text-decoration: none;
-	width: 188px;
+	width: 200px;
 }
 
 .address-search button:hover {
@@ -36,5 +36,5 @@
 	display: inline-block;
 	height: 100%;
 	padding: 0 15px;
-	width: calc(100% - 188px);
+	width: calc(100% - 200px);
 }

@@ -73,7 +73,10 @@ export default class AddressSearch extends React.Component {
 		return (
 			<div>
 				<AddressForm updateQuery={this.updateQuery} getAddressInformation={this.getAddressInformation}></AddressForm>
-				<AddressTransactionList transactions={this.state.transactions} finalBalance={this.state.finalBalance}></AddressTransactionList>
+				{this.state.transactions.length > 0 
+					? <AddressTransactionList transactions={this.state.transactions} finalBalance={this.state.finalBalance}></AddressTransactionList>
+					: null
+				}				
 			</div>
 		)
 	}
