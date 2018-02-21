@@ -25,17 +25,24 @@ export default class AddressSearch extends React.Component {
 
   getAddressInformation() {
     // TODO: connect with API and update state with information
-    const baseUrl = 'https://blockchain.info/';
-    let addressQuery = '/rawaddr/' + this.state.query;
+		let baseUrl = '';
+		let route = '/get-transactions/'
+		let address = this.state.query;
+
     let response;
-    axios.get(baseUrl + addressQuery)
+    axios.get(route + address)
       .then(res => {
+				let data = JSON.parse( res.data.body );
+				let finalBalance = data.final_balance;
+				let transactions = data.txs;
+				// console.log(res.data.body);
+				console.log(finalBalance);
+				console.log(transactions);
+
         this.setState({
           rows: res.txs
         });
       });
-      
-
   }
 
   render() {
