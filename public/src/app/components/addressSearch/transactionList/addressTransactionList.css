@@ -1,5 +1,31 @@
-th, 
-td {
+.address-transaction-list {
+	margin-bottom: 25px;
+}
+
+.address-transaction-list table {
+	border-top: 2px solid #000000;
+}
+
+.address-transaction-list table,
+.address-transaction-list th,
+.address-transaction-list tr,
+.address-transaction-list td{
+	transition: all 1s;
+
+}
+
+.address-transaction-list tr:nth-child(even) {
+	background-color: #f3f5f7;
+}
+
+.address-transaction-list th, 
+.address-transaction-list td {
 	text-align: center;
 	padding: 10px;
+}
+
+.address-transaction-list .small {
+	font-size: 12px;
+	margin-right: 8px;
+	margin-left: 1px;
 }

@@ -37,12 +37,12 @@ class AddressTransactionList extends React.Component {
 		let digitsArr = this.props.finalBalance.toString().split('');
 		let rightArr = digitsArr.slice(Math.max(digitsArr.length - 6, 1)).join('')
 		let leftArr = digitsArr.slice(0, Math.max(digitsArr.length - 6)).join('');
-		let rightInt = parseInt(rightArr)
-		let leftInt = moveDecimal(leftArr)
+		let rightInt = parseInt(rightArr) | 0;
+		let leftInt = moveDecimal(leftArr);
 
     return (
-      <div>
-				<h4>Final Balance: {leftInt}<span> {rightInt}</span> BTC</h4>
+      <div className="address-transaction-list">
+				<h4>Final Balance: {leftInt}<span className="small">{rightInt}</span>BTC</h4>
 				<table>
 					<tbody>
 						<tr>

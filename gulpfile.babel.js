@@ -17,6 +17,7 @@ import browserifyCss from 'browserify-css';
 gulp.task('inject', () => {
 	let paths = [
 		'./public/build/app/app.js',
+		'./node_modules/bootstrap/dist/css/bootstrap.min.css',
 		'./public/build/css/**/*.css',
 	]
 
