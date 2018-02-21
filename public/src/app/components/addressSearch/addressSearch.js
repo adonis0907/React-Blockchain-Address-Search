@@ -9,12 +9,11 @@ export default class AddressSearch extends React.Component {
     
     this.state = {
       query: '',
-      results: {},
-      rows: [1, 2, 3, 4]
+			finalBalance: 0,
+      transactions: []
     }
     this.updateQuery = this.updateQuery.bind(this);
     this.getAddressInformation = this.getAddressInformation.bind(this);
-    
   }
 
   updateQuery({ target }) {
@@ -24,34 +23,30 @@ export default class AddressSearch extends React.Component {
   }
 
   getAddressInformation() {
-    // TODO: connect with API and update state with information
+    // TODO: Create API Manager and move logic there
 		let baseUrl = '';
 		let route = '/get-transactions/'
 		let address = this.state.query;
 
-    let response;
     axios.get(route + address)
       .then(res => {
 				let data = JSON.parse( res.data.body );
-				let finalBalance = data.final_balance;
-				let transactions = data.txs;
-				// console.log(res.data.body);
-				console.log(finalBalance);
-				console.log(transactions);
-
+				console.log(res);
+				console.log(data.txs);
         this.setState({
-          rows: res.txs
-        });
+					finalBalance: data.final_balance,
+          transactions: data.txs
+				});
+				
+				console.log(this.state.transactions);
       });
   }
 
   render() {
-
-
     return (
       <div>
         <AddressForm updateQuery={this.updateQuery} getAddressInformation={this.getAddressInformation}></AddressForm>
-        <AddressTransactionList rows={this.state.rows}></AddressTransactionList>
+        <AddressTransactionList transactions={this.state.transactions} finalBalance={this.state.finalBalance}></AddressTransactionList>
       </div>
     )
   }

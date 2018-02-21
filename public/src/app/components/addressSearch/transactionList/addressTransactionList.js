@@ -4,11 +4,16 @@ class AddressTransactionList extends React.Component {
   constructor(props) {
     super(props);
 
-  }
+	}
+	
   render() {
+		const transactionList = this.props.transactions.map((transaction) => {
+			return (<div>{transaction.ver}</div>)
+		});
     return (
       <div>
-        {this.props.rows}
+				<h1>{this.props.finalBalance}</h1>
+				{transactionList}
       </div>
     );
   }
