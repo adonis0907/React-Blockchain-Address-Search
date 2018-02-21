@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import AddressForm from './form/addressForm';
 import AddressTransactionList from './transactionList/addressTransactionList';
+import ApiManagerAddress from '../../services/api/apiManagerAddress';
 
 export default class AddressSearch extends React.Component {
 	constructor() {
@@ -27,6 +28,7 @@ export default class AddressSearch extends React.Component {
 				"op": "addr_sub", 
 				"addr": address
 			}));
+			console.log('subscribed to address');
 			console.log(evt);
 		};
 
@@ -53,20 +55,16 @@ export default class AddressSearch extends React.Component {
 	}
 
 	getAddressInformation() {
-		// TODO: Create API Manager and move logic there
-		let baseUrl = '';
-		let route = '/get-transactions/'
 		let address = this.state.query;
 
-		axios.get(route + address)
-			.then(res => {
-				let data = JSON.parse(res.data.body);
-				console.log(data.txs)
-				this.setState({
-					finalBalance: data.final_balance,
-					transactions: data.txs
-				});
+		ApiManagerAddress.get(address, (res) => {
+			let data = JSON.parse(res.data.body);
+			console.log(data.txs)
+			this.setState({
+				finalBalance: data.final_balance,
+				transactions: data.txs
 			});
+		});
 	}
 
 	render() {
