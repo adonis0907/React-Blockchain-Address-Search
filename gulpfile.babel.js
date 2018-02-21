@@ -13,23 +13,6 @@ import debug from 'gulp-debug';
 import babelify from 'babelify';
 import rename from 'gulp-rename';
 import browserifyCss from 'browserify-css';
-import connect from 'gulp-connect';
-// import cors from 'cors';
-var cors = function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'headers_you_want_to_accept');
-  next();
-};
-
-
-gulp.task('connect', function() {
-  connect.server({
-    root: './public/build/',
-    middleware: function() {
-        return [cors];
-    }
-  });
-});
 
 gulp.task('inject', () => {
 	let paths = [
@@ -62,7 +45,7 @@ gulp.task('client', () => {
 	return browserify('public/build/app/app.js')
 		.transform(babelify, { presets: ["es2015", "react"] })
 		.transform(browserifyCss, {
-				poll : true
+			poll: true
 		})
 		.bundle()
 		.pipe(source('./public/src/app/app.js'))
@@ -85,14 +68,14 @@ gulp.task('del-build', () => {
 	]);
 })
 
-gulp.task('watch', () =>{
+gulp.task('watch', () => {
 	gulp.watch('./public/src/**/**', [
 		'del-build',
 		'build',
 		'babel',
 		'client',
 		'inject'
-	]); 
+	]);
 })
 
 gulp.task('default', (cb) => {
@@ -102,7 +85,5 @@ gulp.task('default', (cb) => {
 		'babel',
 		'client',
 		'inject',
-		'connect',
-		'watch'
 	)
 })
