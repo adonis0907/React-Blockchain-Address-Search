@@ -10,14 +10,14 @@ App runs on Node and express. Npm run will run a custom script to build the app,
 
 ## Code Walkthrough
 
-I'm very new to React, but wanted to take the time to build something nice. Although it's a small app, created all components in a structure that I consider to be extensible, and that made the most sense to me.
+I'm very new to React, but wanted to take the time to build something nice. Although it's a small app, created all components in a structure that I consider to be extensible, and that made the most sense to me. I also added an apiManager service to separate concerns a bit. Calls to blockchain's API are made from within the nodejs server since getting transactions is not allowed via CORS.
 
-There are 4 components. 
+There are 4 components in the react app. 
 
 (Main App) requires (Address Search) requires (Address Form & Address Transaction List) 
 
 
-Left a few TODOs due to time constraint but ideally I would've liked to create services for Utils, APIs and Socket functionality. Also would've added an AddressTransactionRow component to handle each row (transaction) in the column grid.
+Left a few TODOs due to time constraint but ideally I would've liked to create services for Utils, Socket functionality. Also would've added an AddressTransactionRow component to handle each row (transaction) in the column grid.
 
 I also tried to build a good React, Node, ES6 configuration setup from scratch. This took a big chunk of the time for this code test.
 
