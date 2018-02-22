@@ -2,7 +2,7 @@
 
 ## Quick Setup
 
-* Run npm install & npm run.
+* Run npm install & npm start.
 * Open the app on localhost:3000 
 * (optional) to run in ngrok copy and paste url from console
 
