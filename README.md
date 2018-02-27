@@ -1,4 +1,4 @@
-# blockchain-code-test
+# React Blockchain Address Search w Live Socket Updates
 
 ## Quick Setup
 
@@ -20,9 +20,5 @@ There are 4 components in the react app.
 
 (Main App) requires (Address Search) requires (Address Form & Address Transaction List) 
 
-
-Left a few TODOs due to time constraint but ideally I would've liked to move some functionality to a couple of services classes for Utils, Socket functionality. Also would've added an AddressTransactionRow component to handle each row (transaction) in the column grid.
-
-I also tried to build a good React, Node, ES6 configuration setup from scratch. This took a big chunk of the time for this code test.
 
 Thanks for reviewing.
